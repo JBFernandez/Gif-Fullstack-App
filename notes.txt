@@ -1,0 +1,8 @@
+A fullstack web application focused primarily in backend functionalities for registering a user,
+login a user and loading information using Java, MySQL and Spring Boot,
+
+ using React, React-router and Redux Toolkit for the frontend
+
+
+ VA A SER IGUAL QUE EL DE GIFF APP PERO CADA GIF VA A SER UN CARD CON UN BOTÓN PARA GUARDAR EN BD
+ VA A VER DOS PÁGINAS UNA PARA BUSCAR Y OTRA DONDE ESTARÁN LAS IMAGENES GUARDADAS

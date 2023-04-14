@@ -4,8 +4,6 @@ export const useForm = ( initialState = {} ) => {
 
     const [values, setValues] = useState(initialState);
 
-    console.log("se llamo el useForm");
-
     const reset = () => {
         setValues( initialState );
     }

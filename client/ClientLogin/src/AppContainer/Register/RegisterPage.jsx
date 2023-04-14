@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Register/register.css';
 import { useForm } from '../../utilities/useForm';
+import { Link } from 'react-router-dom';
 
 export const RegisterPage = () => {
 
@@ -43,7 +44,7 @@ export const RegisterPage = () => {
 
             </form>
 
-            <p>Already have an account? <a href="#">Log in here</a>.</p>
+            <p>Already have an account? <Link to={ '/login' } onClick={ () => console.log('clicked') } >Log in here</Link >.</p>
 
         </div>
     </div>
