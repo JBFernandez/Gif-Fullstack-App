@@ -1,6 +1,8 @@
 package com.login.loginApp.model;
 
 
+import com.login.loginApp.utils.SHAUtil;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +21,7 @@ public class Users {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.setPassword(password);
     }
 
     public Users() {
@@ -38,7 +40,7 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = SHAUtil.createHash(password);
     }
 
     public Long getId() {
