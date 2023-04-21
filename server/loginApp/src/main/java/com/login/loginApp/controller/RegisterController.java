@@ -2,26 +2,21 @@ package com.login.loginApp.controller;
 
 import com.login.loginApp.UsersRepository;
 import com.login.loginApp.UsersService;
-import com.login.loginApp.model.LoginData;
 import com.login.loginApp.model.Token;
 import com.login.loginApp.model.Users;
-import com.login.loginApp.utils.SHAUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import java.rmi.server.ServerCloneException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/login")
-@CrossOrigin("*")
-public class AuthController {
-
+@RequestMapping("/api/register")
+public class RegisterController {
 
     private final UsersRepository usersRepository;
 
@@ -37,28 +32,23 @@ public class AuthController {
 
     }
 
-
-
     @Autowired
-    public AuthController(UsersRepository usersRepository) {
+    public RegisterController(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-    }
+    }//constructor
+
 
     @PostMapping
-    public Token login(@RequestBody LoginData data) throws ServletException {
+    public Token addUser(@RequestBody Users user ){
+        Optional<Users> userByEmail = usersRepository.findByEmail( user.getEmail() );
 
-        Optional<Users> userByEmail = usersRepository.findByEmail( data.getEmail() );
         if ( userByEmail.isPresent() ) {
-
-            if (SHAUtil.verifyHash( data.getPassword(), userByEmail.get().getPassword() )) {
-
-                return new Token(generateToken( data.getEmail()), userByEmail.get().getId());
-            }
+            throw new IllegalStateException("An account with the email: " + user.getEmail() + " Already exists.");
+        } else {
+            usersRepository.save(user);
+             return new Token(generateToken( user.getEmail() ), user.getId() );
         }
-
-        throw new ServletException("Invalid login. Please check your credentials.");
-    }//Token
+    }
 
 
-
-}//Class AuthController
+}//class UserController

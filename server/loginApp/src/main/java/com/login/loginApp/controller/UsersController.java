@@ -30,15 +30,11 @@ public class UsersController {
         return usersService.getUser(userId);
     }
 
-    @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId ) {
+    @DeleteMapping
+    public void deleteUser(@RequestParam(required = true) Long userId ) {
         usersService.deleteUser(userId);
     }
 
-    @PostMapping
-    public void addUser(@RequestBody Users user ){
-        usersService.addUser( user );
-    }
 
     @PutMapping(path = "{userId}")
     public void updateUser(@PathVariable("userId") Long userId, @RequestParam(required = true) String currentPassword, @RequestParam(required = true) String newPassword ){

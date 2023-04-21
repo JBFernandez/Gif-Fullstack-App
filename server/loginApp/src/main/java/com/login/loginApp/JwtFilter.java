@@ -29,7 +29,7 @@ public class JwtFilter extends GenericFilterBean {
                 (httpServletRequest.getMethod().equals("DELETE")) ||
                 (httpServletRequest.getMethod().equals("GET")) ) {
             if ( (autHeader == null) || ( !autHeader.startsWith("Bearer ") ) ) {
-                throw new ServletException("1. Invalid Token");
+                throw new ServletException("1. No Bearer");
             }// if null || !Bearer
 
             String token =autHeader.substring(7);

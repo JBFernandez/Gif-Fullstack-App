@@ -1,10 +1,16 @@
 package com.login.loginApp;
 
+import com.login.loginApp.model.Token;
 import com.login.loginApp.model.Users;
+import com.login.loginApp.utils.SHAUtil;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +18,7 @@ import java.util.Optional;
 public class UsersService {
 
     private final UsersRepository usersRepository;
+
 
     @Autowired
     public UsersService(UsersRepository usersRepository) {
@@ -27,22 +34,17 @@ public class UsersService {
     }// getUser()
 
     public void deleteUser(Long id) {
+        Optional<Users> user = usersRepository.findById(id);
         if ( usersRepository.existsById(id) ) {
-            usersRepository.deleteById(id);
+            if ( user.get().getId() == id ) {
+                usersRepository.deleteById(id);
+            } else {
+                throw new IllegalStateException("You cant delete that user");
+            }
         } else {
             throw new IllegalStateException("The user with the id: " + id + " Does not exist.");
         }
     } //deleteUser()
-
-    public void addUser(Users user) {
-        Optional<Users> userByEmail = usersRepository.findByEmail( user.getEmail() );
-
-        if ( userByEmail.isPresent() ) {
-            throw new IllegalStateException("An account with the email: " + user.getEmail() + " Already exists.");
-        } else {
-            usersRepository.save(user);
-        }
-    }//addUser
 
     @Transactional
     public void updateUser( Long id, String currentPassword, String newPassword ) {
@@ -54,7 +56,7 @@ public class UsersService {
             throw new IllegalStateException("You need to submit your current and new password");
         }
 
-        if ( !currentPassword.equals(user.getPassword())  ) {
+        if (!SHAUtil.verifyHash(currentPassword, user.getPassword() )) {
 
             throw new IllegalStateException("Password is incorrect");
 
