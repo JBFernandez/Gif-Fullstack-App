@@ -7,15 +7,19 @@ import com.login.loginApp.model.Users;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.http.HttpHeaders;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/register")
+@CrossOrigin("*")
 public class RegisterController {
 
     private final UsersRepository usersRepository;
@@ -38,17 +42,43 @@ public class RegisterController {
     }//constructor
 
 
+//    @PostMapping
+//    public Token addUser(@RequestBody Users user, HttpServletResponse response) throws IOException {
+//        Optional<Users> userByEmail = usersRepository.findByEmail( user.getEmail() );
+//
+//        if ( userByEmail.isPresent() ) {
+//
+//            response.setHeader("Custom-Header", "foo");
+//            response.setStatus(200);
+//            response.getWriter().println("Hello World!");
+//
+//            throw new IllegalStateException("An account with the email: " + user.getEmail() + " Already exists.");
+//        } else {
+//            usersRepository.save(user);
+//             return new Token(generateToken( user.getEmail() ), user.getId() );
+//        }
+//    }
+
     @PostMapping
-    public Token addUser(@RequestBody Users user ){
+    public ResponseEntity<Map< String, String >> addUser(@RequestBody Users user, HttpServletResponse response) throws IOException {
         Optional<Users> userByEmail = usersRepository.findByEmail( user.getEmail() );
+            Map<String, String> returnValue = new HashMap<>();
 
         if ( userByEmail.isPresent() ) {
-            throw new IllegalStateException("An account with the email: " + user.getEmail() + " Already exists.");
+            returnValue.put("error", "An account with the email: " + user.getEmail() + " Already exists.");
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(returnValue);
+
         } else {
             usersRepository.save(user);
-             return new Token(generateToken( user.getEmail() ), user.getId() );
+            returnValue.put("token", generateToken( user.getEmail() ));
+            returnValue.put("id", user.getId().toString() );
+
+            return ResponseEntity.status(HttpStatus.OK).body(returnValue);
         }
     }
+
+
 
 
 }//class UserController

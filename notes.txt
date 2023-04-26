@@ -17,6 +17,8 @@ Used JWT and encrypted passwords for more security
 
 4. Proteger las rutas con JWT y conectar a front parte de usuarios
 
+4.1 Recordar que para acciones de un usuario específico tenemos que verificar también que el id coincida
+
 5. copiar parte de proyecto de gifs
 
 6. Funcionalidad de front para parte de Gifs

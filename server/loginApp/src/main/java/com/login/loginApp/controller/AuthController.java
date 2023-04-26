@@ -9,13 +9,13 @@ import com.login.loginApp.utils.SHAUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.rmi.server.ServerCloneException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/login")
@@ -44,19 +44,40 @@ public class AuthController {
         this.usersRepository = usersRepository;
     }
 
+//    @PostMapping
+//    public Token login(@RequestBody LoginData data) throws ServletException {
+//
+//        Optional<Users> userByEmail = usersRepository.findByEmail( data.getEmail() );
+//        if ( userByEmail.isPresent() ) {
+//
+//            if (SHAUtil.verifyHash( data.getPassword(), userByEmail.get().getPassword() )) {
+//
+//                return new Token(generateToken( data.getEmail()), userByEmail.get().getId());
+//            }
+//        }
+//
+//        throw new ServletException("Invalid login. Please check your credentials.");
+//    }//Token
+
     @PostMapping
-    public Token login(@RequestBody LoginData data) throws ServletException {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginData data) throws ServletException {
 
         Optional<Users> userByEmail = usersRepository.findByEmail( data.getEmail() );
+        Map<String, String> returnValue = new HashMap<>();
         if ( userByEmail.isPresent() ) {
 
             if (SHAUtil.verifyHash( data.getPassword(), userByEmail.get().getPassword() )) {
 
-                return new Token(generateToken( data.getEmail()), userByEmail.get().getId());
+                returnValue.put("token", generateToken( data.getEmail() ));
+                returnValue.put("id", userByEmail.get().getId().toString() );
+
+                return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+
             }
         }
 
-        throw new ServletException("Invalid login. Please check your credentials.");
+        returnValue.put("error", "Invalid login. Please check your credentials." );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(returnValue);
     }//Token
 
 

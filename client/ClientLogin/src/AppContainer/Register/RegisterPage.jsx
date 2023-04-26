@@ -9,6 +9,8 @@ import { useState } from 'react';
 
 export const RegisterPage = () => {
 
+    const navigate =  useNavigate();
+
     const initialForm = {
         name: '',
         email: '',
@@ -84,10 +86,19 @@ export const RegisterPage = () => {
 
                 try {
                     const { data } =  await api.post('/register', user);
-                    localStorage.setItem('Token', data.token);
+                    localStorage.setItem('token', data.token);
                     localStorage.setItem('id', data.id);
 
-                    setLogin(true)       
+                    Swal.fire({
+                        title: 'Welcome!',
+                        text: 'Enjoy',
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        timer: 2000
+                      });
+
+                    setLogin(true);
+                    navigate("/giff");       
                      
 
                 }            
