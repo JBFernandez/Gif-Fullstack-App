@@ -4,6 +4,7 @@ import { RegisterPage } from './AppContainer/Register/RegisterPage';
 import { LoginPage } from './AppContainer/Login/LoginPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './AppContainer/Pages/ErrorPage';
+import { GiffPage } from './AppContainer/Pages/GiffPage';
 
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />
+  },
+  {
+    path: "/giff",
+    element: < GiffPage />
   },
 ]);
 
