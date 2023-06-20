@@ -21,7 +21,7 @@ Used JWT and encrypted passwords for more security
 
 5. copiar parte de proyecto de gifs
 
-6. Funcionalidad de front para parte de Gifs
+6. Funcionalidad de front para parte de Gifs ( Save (POST), Delete y GET() )
 
 e2e30d96f29b07b05f1a4437d4cbbe464cc8fc7f678e31d3d115231ecd1013d2
 

@@ -5,13 +5,14 @@ export const GifGridItem = ({ id, title, url }) => {
     const handleClick = (e) => {
         e.preventDefault();
 
+        console.log(e.target.attributes.content.value);
+
         const x = e.target.attributes.content.value.split(".-.");
         const url = x[0];
         const title = x[1];
         const userId = localStorage.getItem("id");
 
-
-        console.log( url );
+        console.log(url);
         console.log( title );
         console.log( userId );
     }
