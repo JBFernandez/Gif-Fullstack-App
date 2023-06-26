@@ -57,9 +57,9 @@ export const RegisterPage = () => {
               setValidForm(false);            
         }
 
-        const myRe = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/g;
+        const myRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/g; // Regex for email
 
-        if ( !myRe.test(formValues.email) ) {
+        if ( !myRegex.test(formValues.email) ) {
 
             Swal.fire({
                 title: 'Error!',

@@ -20,9 +20,10 @@ export const AddCategory = ({ setCategories }) => {
 
   return (
     <form onSubmit={ handleSubmit }> {/*form would be the grouping element, we dont need the fragment */}
-            <p> { inputValue } </p>
+            <p > { inputValue } </p>
             <input
                 type="text"
+                placeholder='Find a Gif'
                 value={inputValue}
                 onChange={ handleInputChange } //e is the event
             /> {/* input */}

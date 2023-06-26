@@ -39,3 +39,10 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+
+  .bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+  }

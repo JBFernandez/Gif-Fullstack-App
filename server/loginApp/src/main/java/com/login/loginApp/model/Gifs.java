@@ -23,7 +23,7 @@ public class Gifs {
 
     public Gifs() {
 
-    }
+    } //constructor vacío
 
     public Long getId() {
         return id;
