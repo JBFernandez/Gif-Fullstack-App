@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface GifsRepository extends JpaRepository<Gifs, Long> {
 
     @Query("SELECT g FROM Gifs g WHERE g.title=?1")
-    Optional<Gifs> findByGif(String gif);
+    Optional<List<Gifs>> findByGif(String gif);
 
     @Query("SELECT g FROM Gifs g WHERE g.userId=?1")
     Optional<List<Gifs>> findUserGifs(Long userId);

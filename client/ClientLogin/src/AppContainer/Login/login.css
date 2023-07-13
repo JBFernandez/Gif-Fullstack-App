@@ -3,7 +3,7 @@
     font-family: Arial, sans-serif;
     background-color: #FFFFFF;
     color: #444444;
-    margin: 0;
+    margin: 10%;
   }
   
   h1 {
@@ -66,6 +66,10 @@
   
   .already-registered a:hover {
     text-decoration: underline;
+  }
+
+  p {
+    margin: 5%;
   }
   
   

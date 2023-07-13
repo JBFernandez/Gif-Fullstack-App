@@ -143,8 +143,8 @@ export const RegisterPage = () => {
         
 
             </form>
-
             <p>Already have an account? <Link to={ '/login' }  >Log in here</Link >.</p>
+
 
         </div>
     </div>
