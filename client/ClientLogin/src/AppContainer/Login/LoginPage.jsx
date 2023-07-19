@@ -4,8 +4,11 @@ import { useForm } from '../../utilities/useForm';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../api/api';
 import Swal from 'sweetalert2';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 export const LoginPage = () => {
+
+  const { startLogin } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -25,38 +28,40 @@ export const LoginPage = () => {
       password: formValues.password
     }
 
-    try {
+    startLogin( user );
 
-      const { data } =  await api.post('/login', user);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('id', data.id);
+    // try {
 
-      console.log(data);
+    //   const { data } =  await api.post('/login', user);
+    //   localStorage.setItem('token', data.token);
+    //   localStorage.setItem('id', data.id);
 
-      Swal.fire({
-        title: 'Welcome!',
-        text: 'Enjoy',
-        icon: 'success',
-        confirmButtonText: 'Ok',
-        timer: 2000
-      });
+    //   console.log(data);
 
-      navigate("/giff", {
-        replace: true
-      })
+    //   Swal.fire({
+    //     title: 'Welcome!',
+    //     text: 'Enjoy',
+    //     icon: 'success',
+    //     confirmButtonText: 'Ok',
+    //     timer: 2000
+    //   });
 
-    } catch (error) {
-      console.log(error);
+    //   navigate("/giff", {
+    //     replace: true
+    //   })
 
-      Swal.fire({
-        title: 'Error!',
-        text: error.response.data.error,
-        icon: "error",
-        confirmButtonText: 'Ok',
-        timer: 2000
-      });
+    // } catch (error) {
+    //   console.log(error);
 
-    }
+    //   Swal.fire({
+    //     title: 'Error!',
+    //     text: error.response.data.error,
+    //     icon: "error",
+    //     confirmButtonText: 'Ok',
+    //     timer: 2000
+    //   });
+
+    // }
 
 
     

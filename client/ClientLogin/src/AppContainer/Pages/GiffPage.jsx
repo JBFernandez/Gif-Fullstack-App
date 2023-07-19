@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AddCategory } from '../components/AddCategory';
 import { GifGrid } from '../components/GifGrid';
 import "../Pages/gifPage.css";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 export const GiffPage = ({ defaultCategories = [] }) => {
 
   const [categories, setCategories] = useState( defaultCategories );
   const navigate = useNavigate();
+
+  const { startLogout } = useAuthStore();
+
 
   console.log(categories);
 
@@ -17,6 +22,7 @@ export const GiffPage = ({ defaultCategories = [] }) => {
     navigate("/savedgif");
       
   }
+  
 
 
   return (
@@ -37,6 +43,8 @@ export const GiffPage = ({ defaultCategories = [] }) => {
                         ))
                 }
             </ol>
+
+            <p style={{cursor: 'pointer'}}  onClick={ startLogout } > Logout. </p>
     </div>
   )
 }

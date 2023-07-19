@@ -7,6 +7,8 @@ import ErrorPage from './AppContainer/Pages/ErrorPage';
 import { GiffPage } from './AppContainer/Pages/GiffPage';
 import { Test } from './AppContainer/Pages/Test';
 import { SavedGifs } from './AppContainer/Pages/SavedGifs';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 
 const router = createBrowserRouter([
@@ -38,6 +40,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={ router } />
+    <Provider store={ store } >
+      <RouterProvider router={ router } />
+
+    </Provider>
   </React.StrictMode>,
 )
