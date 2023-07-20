@@ -9,6 +9,7 @@ import { Test } from './AppContainer/Pages/Test';
 import { SavedGifs } from './AppContainer/Pages/SavedGifs';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import "../src/AppContainer/Register/register.css"
 
 
 const router = createBrowserRouter([

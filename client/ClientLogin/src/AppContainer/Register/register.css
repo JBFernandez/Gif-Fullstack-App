@@ -1,9 +1,19 @@
 /* Desktop styles */
+body {
+  box-sizing: border-box;
+  text-align: -webkit-center;
+}
+
 .container {
     font-family: Arial, sans-serif;
     background-color: #FFFFFF;
     color: #444444;
     margin: 0;
+    padding: 0%;
+  }
+
+  .main-container {
+    padding: 0%;
   }
   
   h1 {

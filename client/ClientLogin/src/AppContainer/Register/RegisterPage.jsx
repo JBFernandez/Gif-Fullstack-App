@@ -5,11 +5,13 @@ import { Link, Navigate, redirect, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { api } from '../../api/api';
 import { useState } from 'react';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 
 export const RegisterPage = () => {
 
     const navigate =  useNavigate();
+    const { startRegister, startLogout } = useAuthStore();
 
     const initialForm = {
         name: '',
@@ -19,15 +21,8 @@ export const RegisterPage = () => {
     }
     
     const [ formValues, handleInputChange, reset ] = useForm( initialForm );
-    const [login, setLogin] = useState(false);
-    const [validForm, setValidForm] = useState(true);
-
-    // useEffect(() => {
-
-    //     console.log(login);
-    
-    // }, [login])
-    
+    // const [login, setLogin] = useState(false);
+    // const [validForm, setValidForm] = useState(true);    
 
     const submit = async(e) => {
         e.preventDefault();
@@ -35,93 +30,94 @@ export const RegisterPage = () => {
         const user = {
             name: formValues.name,
             email: formValues.email,
-            password: formValues.password1
+            password1: formValues.password1,
+            password2: formValues.password2
           }
 
-          console.log(user);
+        startRegister( user );
 
-            let nombre = "";
-            nombre = formValues.name;
-            let contraseña = "";
-            contraseña = formValues.password1;
+        //     let nombre = "";
+        //     nombre = formValues.name;
+        //     let contraseña = "";
+        //     contraseña = formValues.password1;
 
-        if ( nombre.length < 3 ) {
+        // if ( nombre.length < 3 ) {
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Insert a proper name',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
+        //     Swal.fire({
+        //         title: 'Error!',
+        //         text: 'Insert a proper name',
+        //         icon: 'error',
+        //         confirmButtonText: 'Ok'
+        //       })
 
-              setValidForm(false);            
-        }
+        //       setValidForm(false);            
+        // }
 
-        const myRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/g; // Regex for email
+        // const myRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/g; // Regex for email
 
-        if ( !myRegex.test(formValues.email) ) {
+        // if ( !myRegex.test(formValues.email) ) {
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Insert a propper email',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
+        //     Swal.fire({
+        //         title: 'Error!',
+        //         text: 'Insert a propper email',
+        //         icon: 'error',
+        //         confirmButtonText: 'Ok'
+        //       })
 
-              setValidForm(false);            
-        }
+        //       setValidForm(false);            
+        // }
 
-        if ( (contraseña.length < 6) || (formValues.password1 !== formValues.password2)) {
+        // if ( (contraseña.length < 6) || (formValues.password1 !== formValues.password2)) {
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Passwords most have 6 characters and be the same',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
-              setValidForm(false);           
-        }
+        //     Swal.fire({
+        //         title: 'Error!',
+        //         text: 'Passwords most have 6 characters and be the same',
+        //         icon: 'error',
+        //         confirmButtonText: 'Ok'
+        //       })
+        //       setValidForm(false);           
+        // }
 
-            if (validForm) {
+        //     if (validForm) {
 
-                try {
-                    const { data } =  await api.post('/register', user);
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('id', data.id);
+        //         try {
+        //             const { data } =  await api.post('/register', user);
+        //             localStorage.setItem('token', data.token);
+        //             localStorage.setItem('id', data.id);
 
-                    Swal.fire({
-                        title: 'Welcome!',
-                        text: 'Enjoy',
-                        icon: 'success',
-                        confirmButtonText: 'Ok',
-                        timer: 2000
-                      });
+        //             Swal.fire({
+        //                 title: 'Welcome!',
+        //                 text: 'Enjoy',
+        //                 icon: 'success',
+        //                 confirmButtonText: 'Ok',
+        //                 timer: 2000
+        //               });
 
-                    setLogin(true);
-                    navigate("/giff");       
+        //             setLogin(true);
+        //             navigate("/giff");       
                      
 
-                }            
+        //         }            
       
-                catch (error) {
-                    console.log(error);
+        //         catch (error) {
+        //             console.log(error);
 
-                    Swal.fire({
-                        title: 'Error!',
-                        text: error.response.data.error,
-                        icon: 'error',
-                        confirmButtonText: 'Ok',
-                        timer: 2000
-                      });
-                }
+        //             Swal.fire({
+        //                 title: 'Error!',
+        //                 text: error.response.data.error,
+        //                 icon: 'error',
+        //                 confirmButtonText: 'Ok',
+        //                 timer: 2000
+        //               });
+        //         }
                 
-            }        
+        //     }        
     }
 
   return (
     <div>
 
-        <div className='container'>
+        <div className='main-container'>
 
         
             <h1>Register User</h1>
@@ -141,9 +137,9 @@ export const RegisterPage = () => {
                 <button type="submit" value="Submit" onClick={ submit } > Submit </button>
 
         
+            <p >Already have an account? <Link to={ '/login' }  >Log in here</Link >.</p>
 
             </form>
-            <p>Already have an account? <Link to={ '/login' }  >Log in here</Link >.</p>
 
 
         </div>

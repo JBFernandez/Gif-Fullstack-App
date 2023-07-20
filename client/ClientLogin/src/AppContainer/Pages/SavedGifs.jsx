@@ -6,12 +6,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getSavedGifs } from '../../helpers/getSavedGifs';
 import { GifGridItem } from '../components/GifGridItem';
 import { api } from '../../api/api';
+import { useAuthStore } from '../../hooks/useAuthStore';
+import { useSelector } from 'react-redux';
 
 export const SavedGifs = () => {
 
+  const  {user}  = useSelector( state => state.auth );
   const navigate = useNavigate();
+  const { startLogout } = useAuthStore()
 
   const userId = localStorage.getItem("id");
+
 
   const [savedGifs, setSavedGifs] = useState({
     data: [],
@@ -57,12 +62,12 @@ export const SavedGifs = () => {
 
   const { data, loading } = savedGifs;
 
-  console.log(data);
+  console.log(user);
 
   return (
-    <div>
+    <div className='container' >
       <div className='bar' >
-       <h2> GifApp </h2>
+       <h2> Welcome: { user.name } </h2>
        <button onClick={findGifs} > Find Gifs </button>
       </div>
             <hr/> {/*  REACT tag to place a black line */}  
@@ -83,7 +88,7 @@ export const SavedGifs = () => {
         </ol> 
     </div>
 
-    <p> <Link to={ '/login' }  >Logout</Link >.</p>
+    <p style={{ cursor: 'pointer', color:'rgb(0, 112, 192)' }} onClick={ startLogout } > Logout </p>
 
     </div>
   )

@@ -69,8 +69,9 @@ public class AuthController {
             if (SHAUtil.verifyHash( data.getPassword(), userByEmail.get().getPassword() )) {
 
                 returnValue.put("token", generateToken( data.getEmail() ));
-                returnValue.put("id", userByEmail.get().getId().toString() );
 
+                returnValue.put("id", userByEmail.get().getId().toString() );
+                returnValue.put("name", userByEmail.get().getName() );
                 return ResponseEntity.status(HttpStatus.OK).body(returnValue);
 
             }

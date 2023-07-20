@@ -5,6 +5,10 @@
   body {
     padding: 5%;
   }
+
+  .container {
+    padding: 5%;
+  }
   
   input {
     color: grey;
