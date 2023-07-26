@@ -72,6 +72,15 @@ export const useAuthStore = () => {
 
         dispatch( onChecking() );
 
+        let apiUser = {
+            ...user,
+            password: user.password1
+        }
+
+        console.log(user);
+
+        console.log(apiUser);
+
         let nombre = "";
             nombre = user.name;
             let contraseña = "";
@@ -117,7 +126,7 @@ export const useAuthStore = () => {
             if (validForm) {
 
                 try {
-                    const { data } =  await api.post('/register', user);
+                    const { data } =  await api.post('/register', apiUser);
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('id', data.id);
 
